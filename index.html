@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Andrey Yaschenko — what I've built</title>
+<meta name="description" content="Production LLM agents for sales, marketing and operations teams, built and run by Andrey Yaschenko. Lead enrichment, speech analytics, reporting agents, SecondBrain.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F2F4F3; --panel:#FFFFFF; --ink:#1C2126; --ink-2:#4B5560; --ink-3:#7A8590;
+  --line:#D9DEDC; --accent:#0E6B61; --accent-soft:#E1EFEC; --warn:#A86A12; --warn-soft:#F6EBD6;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#15191C; --panel:#1E2428; --ink:#E8ECEA; --ink-2:#B4BDC2; --ink-3:#7F8A92;
+    --line:#2E373C; --accent:#5FC2B3; --accent-soft:#1B312E; --warn:#E0A64A; --warn-soft:#3A2E17;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#15191C; --panel:#1E2428; --ink:#E8ECEA; --ink-2:#B4BDC2; --ink-3:#7F8A92;
+  --line:#2E373C; --accent:#5FC2B3; --accent-soft:#1B312E; --warn:#E0A64A; --warn-soft:#3A2E17;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 40%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+header.top{display:flex;justify-content:space-between;align-items:baseline;padding:28px 0 0;gap:16px;flex-wrap:wrap}
+header.top .name{font-weight:600;font-size:17px;color:var(--ink);border:0}
+header.top nav a{margin-left:22px;font-size:15px;color:var(--ink-2);border:0}
+header.top nav a:hover{color:var(--accent)}
+
+/* hero */
+.hero{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:48px;align-items:start;padding:64px 0 48px}
+.hero h1{font-size:clamp(34px,4.4vw,52px);line-height:1.08;font-weight:600;letter-spacing:-.015em;margin:0 0 22px}
+.hero p{font-size:19px;color:var(--ink-2);margin:0 0 16px;max-width:30em}
+.hero .facts{margin:30px 0 0;padding:0;list-style:none;color:var(--ink-2);font-size:16px}
+.hero .facts li{padding:9px 0;border-top:1px solid var(--line)}
+.hero .facts li:last-child{border-bottom:1px solid var(--line)}
+.hero .facts b{color:var(--ink);font-weight:500}
+
+/* telegram-ish brief */
+.chat{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 1px 0 rgba(0,0,0,.03)}
+.chat .bar{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--line);font-size:14px;color:var(--ink-2)}
+.chat .bar .av{width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-weight:600;font-size:13px}
+.chat .bar .who{color:var(--ink);font-weight:500}
+.chat .bar .when{margin-left:auto;font-variant-numeric:tabular-nums}
+.brief{padding:18px 20px 6px;max-height:560px;overflow:auto;font-size:15px;line-height:1.5;scrollbar-width:thin}
+.brief.open{max-height:none}
+.brief h2{font-size:17px;margin:0 0 14px;font-weight:600}
+.brief h3{font-size:15px;margin:18px 0 6px;font-weight:600}
+.brief ul,.brief ol{margin:0;padding-left:18px}
+.brief li{margin:0 0 8px}
+.brief li b{font-weight:500}
+.brief code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent);padding:1px 5px;border-radius:4px}
+.brief .late{font-family:var(--mono);font-size:.84em;background:var(--warn-soft);color:var(--warn);padding:1px 6px;border-radius:4px;white-space:nowrap}
+.brief .where{color:var(--ink-3)}
+.brief blockquote{margin:6px 0 6px;padding:10px 14px;border-left:3px solid var(--accent);background:var(--accent-soft);border-radius:0 8px 8px 0;color:var(--ink)}
+.brief .note{color:var(--ink-3);font-size:14px}
+.chat .foot{display:flex;justify-content:space-between;align-items:center;padding:10px 16px 12px;border-top:1px solid var(--line);font-size:13px;color:var(--ink-3)}
+.chat .foot button{font:inherit;color:var(--accent);background:none;border:0;padding:4px 0;cursor:pointer;border-bottom:1px solid transparent}
+.chat .foot button:hover{border-bottom-color:var(--accent)}
+
+/* sections */
+section{padding:56px 0;border-top:1px solid var(--line)}
+section h2{font-size:28px;font-weight:600;letter-spacing:-.01em;margin:0 0 10px}
+section .lead{color:var(--ink-2);font-size:18px;max-width:40em;margin:0 0 36px}
+.sys{display:grid;grid-template-columns:220px minmax(0,1fr);gap:16px 40px;padding:28px 0;border-top:1px solid var(--line)}
+.sys:first-of-type{border-top:0;padding-top:0}
+.sys .k{color:var(--ink-3);font-size:15px;line-height:1.45;padding-top:3px}
+.sys .k b{display:block;color:var(--ink);font-size:19px;font-weight:600;line-height:1.25;margin-bottom:6px}
+.sys .k .ctx{display:block}
+.sys .v p{margin:0 0 12px;max-width:66ch}
+.sys .v p:last-child{margin-bottom:0}
+.sys .v .mine{color:var(--ink-2)}
+.sys .v .mine b{color:var(--ink);font-weight:500}
+.stack{margin:14px 0 0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:6px 8px}
+.stack li{font-size:13px;color:var(--ink-2);border:1px solid var(--line);border-radius:999px;padding:2px 10px;background:var(--panel)}
+
+/* flow diagram */
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:6px 0;margin:14px 0 4px;font-size:14px}
+.flow span{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:5px 10px;color:var(--ink)}
+.flow span.llm{border-color:color-mix(in srgb,var(--accent) 55%,var(--line));background:var(--accent-soft)}
+.flow i{font-style:normal;color:var(--ink-3);padding:0 7px}
+.flow-cap{font-size:14px;color:var(--ink-3);margin:6px 0 0}
+
+/* how + earlier */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+.two p{margin:0 0 14px;max-width:60ch;color:var(--ink-2)}
+.two p b{color:var(--ink);font-weight:500}
+.career{margin:0;padding:0;list-style:none}
+.career li{display:grid;grid-template-columns:120px 1fr;gap:16px;padding:10px 0;border-top:1px solid var(--line);font-size:16px}
+.career li:last-child{border-bottom:1px solid var(--line)}
+.career .yrs{color:var(--ink-3);font-variant-numeric:tabular-nums}
+.career .what{color:var(--ink-2)}
+.career .what b{color:var(--ink);font-weight:500}
+
+footer{padding:40px 0 56px;border-top:1px solid var(--line);color:var(--ink-2);font-size:16px}
+footer .row{display:flex;flex-wrap:wrap;gap:10px 28px;align-items:baseline}
+footer .row b{color:var(--ink);font-weight:600}
+footer small{display:block;margin-top:18px;color:var(--ink-3);font-size:14px}
+
+@media (max-width:900px){
+  .hero{grid-template-columns:1fr;gap:36px;padding:44px 0 36px}
+  .sys{grid-template-columns:1fr;gap:10px;padding:24px 0}
+  .two{grid-template-columns:1fr;gap:28px}
+}
+@media (max-width:600px){
+  body{font-size:16px}
+  header.top nav a{margin-left:14px}
+  .brief{max-height:440px}
+  .career li{grid-template-columns:1fr;gap:2px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <a class="name" href="#">Andrey Yaschenko</a>
+  <nav>
+    <a href="#systems">Systems</a>
+    <a href="#how">How I work</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<section class="hero" style="border-top:0">
+  <div>
+    <h1>LLM agents that real sales, marketing and account teams use every morning.</h1>
+    <p>I design them, write most of the backend, deploy them and keep them running. The message next to this text is one of them: the brief my own agent sent me this morning, names changed.</p>
+    <p>Belgrade. Fifteen years in adtech, payments and media; four years shipping agentic systems to production.</p>
+    <ul class="facts">
+      <li><b>~2,000</b> sales calls scored every night by a speech-analytics pipeline</li>
+      <li><b>~20k lines</b> of FastAPI behind a B2B lead-enrichment and outreach backend</li>
+      <li><b>8 sources</b> fused in SecondBrain: chats, email, meetings, tracker, git</li>
+    </ul>
+  </div>
+
+  <div class="chat" aria-label="Morning brief from SecondBrain, as delivered to Telegram">
+    <div class="bar"><span class="av">SB</span><span class="who">SecondBrain</span><span class="when">Tue 27 Oct, 06:02</span></div>
+    <div class="brief" id="brief">
+      <h2>☀️ Morning, Tuesday 27 October</h2>
+
+      <h3>Waiting on me</h3>
+      <ul>
+        <li><b>E.A., client-side PM at a real-estate developer:</b> on 26.10 at 13:08 she opened a shared Drive folder and asked for creative exports to land there so her team can test on their side. You promised this for 21–22.10; <code>PR #41</code> has been open since 22.10. <span class="where">Where: Yandex Messenger, chat “Client // UTM tagging”.</span></li>
+      </ul>
+
+      <h3>Waiting for others</h3>
+      <ul>
+        <li><b>Access to all active marketplace ad accounts + links to materials</b> (<code>TICKET-386</code>, 22.10): waiting on K.K., <span class="late">5 days silent</span>. <span class="where">Where: Yandex Messenger, DM.</span></li>
+        <li><b>Telegram, tracker and Google tokens, Todoist check</b> (<code>TICKET-435</code>, 22.10): waiting on pilot user A.K., <span class="late">5 days</span>. <span class="where">Where: Telegram, DM.</span></li>
+        <li><b>Row 3097 (LinView 2.36 → 6?) and a regional target in the November plan (47.1 vs 7)</b> (26.10): waiting on media planner P.Z., 1 day. <span class="where">Where: Telegram, DM.</span></li>
+        <li><b>Draft “Q3–Q4 2026 update — bets for 2027” v1.0</b> (26.10): waiting for feedback from N., 1 day. <span class="where">Where: Telegram, client team chat.</span></li>
+      </ul>
+
+      <h3>Decide today</h3>
+      <ul>
+        <li>The key project for the next two sprints (<code>TICKET-449</code>, <span class="late">was due 26.10</span>). Decide at the 13:00 sync with K. Options: the OomUp admin panel by 01.11 (the team is asking) or the pilot foundation (agent isolation, <code>TICKET-460</code>).</li>
+        <li>Bonsai was chosen on 23.10 and <code>PR #91</code> is merged, yet <code>TICKET-441/445</code> are still Todo and K. has not received the Ollama project parameters. Close the tickets or name what is blocking.</li>
+        <li>Routine edits from 26.10 (third-party-task filter, PROMISE_RULE) sit uncommitted in the SecondBrain repo, so they are not live on the agency instance. Decide: PR today or wait.</li>
+      </ul>
+
+      <h3>Prepare</h3>
+      <ul>
+        <li><b>12:30 Current projects (with the agency head):</b> the product one-pager went out on 19.10, <code>TICKET-403</code> closed 26.10; no decision yet on what goes to the Board. Full dossier: <code>/prep Current projects</code></li>
+        <li><b>13:00 Sync with K.:</b> open — <code>TICKET-449</code> (sprints), Bonsai parameters (promised 23.10). K. — OomUp/CI and admin panel by 01.11. Contentious — client encryption <code>TICKET-271/272</code>: set a date or pause (<span class="late">overdue since 23.09</span>). The 29.10 sync is being moved (<code>TICKET-447</code>). Full dossier: <code>/prep Sync with K.</code></li>
+      </ul>
+
+      <h3>What changed in the last 24 hours</h3>
+      <ul>
+        <li>Creative Validator: <code>PR #43</code> (+23 client projects in the reconciliation, 90-minute run cap) and <code>PR #44</code> (constructor: content search, image link in card) merged 26.10 — both on branches without a ticket number.</li>
+        <li>Board review 26.10: 5 tickets Done, 18 new (epics 450–453, ADR-0002 steps 1–3, ADR-0003).</li>
+        <li>Stalled: Bonsai (441/445) — no commit and no status change since 23.10. <code>TICKET-462</code> (unit-cost measurement on Bonsai) depends on 441.</li>
+        <li>SecondBrain working copy: uncommitted since 26.10 — engine.py +162 lines (third-party-task filter), retain_mission (PROMISE_RULE), tests, compose, docs/routines.md, new scripts/retain_eval/promise_probe.py.</li>
+      </ul>
+
+      <h3>Draft replies (1)</h3>
+      <ol>
+        <li>To E.A., chat “Client // UTM tagging”
+          <blockquote>E., thanks — I can see the folder. Wiring up the export: creatives from the “ready for review” block in Figma will land in your folder on every reconciliation run. I will ping you when the first batch arrives so you can test image handling on your side without waiting for the client's access.</blockquote>
+          <span class="note">(check before sending: date of the first batch; PR #41 with the Drive export is not merged yet)</span>
+        </li>
+      </ol>
+
+      <h3>Tracker (14 overdue, top of the list)</h3>
+      <ul>
+        <li><code>TICKET-449</code> Plan two sprints with K. — <span class="late">overdue since 26.10</span></li>
+        <li><code>TICKET-445</code> Verify the nightly run: Bonsai or the alternative model — <span class="late">overdue since 23.10</span>, High</li>
+        <li><code>TICKET-441</code> Move SecondBrain to Bonsai and unblock K. — <span class="late">overdue since 21.10</span>, High</li>
+        <li><code>TICKET-435</code> Onboard pilot user A.K. — <span class="late">overdue since 20.10</span>, In Progress (waiting on his tokens)</li>
+        <li><code>TICKET-408</code> SecondBrain unit economics — <span class="late">overdue since 16.10</span>, High (the subject of PR #97 from 25.10, ticket untouched)</li>
+        <li>Coming up: <code>TICKET-447</code> move the 29.10 sync — due 29.10; <code>TICKET-353</code> proposal to the Group — 31.10</li>
+      </ul>
+
+      <h3>Code (git + GitHub)</h3>
+      <ul>
+        <li>Awaiting my review: none</li>
+        <li>My PRs: Creative Validator <code>#41</code> (Figma → Google Drive for adjacent teams) — open 5 days, E.A. is waiting on it; <code>#40</code> (team registry, TICKET-384) — 5 days; <code>#30</code> (“Campaigns: all”) — 28 days; platform repo <code>#14</code> (standalone skill → storefront module) — CI green, 49 days</li>
+        <li>Commits in the window: Creative Validator — 5 (2 merges, no tickets on branches); SecondBrain — 0, but 6 files uncommitted; nine other repos — 0</li>
+      </ul>
+
+      <h3>Risks and contradictions (4)</h3>
+      <ul>
+        <li>docs/routines.md already says “in effect since 26.10” (third-party-task filter in briefs), but the change is not committed. The agency instance deploys only on push to master, so two pilot users still get the old briefs.</li>
+        <li>Bonsai was decided 23.10 and PR #91 merged, but tickets 441/445 are frozen and K. has not received the Ollama parameters. The unit-cost measurement (TICKET-462) is blocked on this.</li>
+        <li>The pilot is expanding (A.K. now, another user this week), but agent isolation (TICKET-460) is in Backlog and the agency deploy step (TICKET-432, High) has had no assignee since 20.10.</li>
+        <li>Check whether still relevant: two commitments from a colleague (meeting intro, due 02.10; sales idea to the shared chat, due 16.10); the agency head's Board decision (promised 13.10); TICKET-367, 356, 382, 315 — no movement for 10+ days.</li>
+      </ul>
+    </div>
+    <div class="foot">
+      <span>Translated from Russian; people, clients and ticket numbers replaced; personal section removed. Nothing added.</span>
+      <button type="button" id="toggle" aria-controls="brief" aria-expanded="false">Show full brief</button>
+    </div>
+  </div>
+</section>
+
+<section id="systems">
+  <h2>Systems in production</h2>
+  <p class="lead">Each one has real users and a real workflow it had to survive. Listed by how close it sits to a GTM team.</p>
+
+  <div class="sys">
+    <div class="k"><b>Lead Enrichment Pipeline</b><span class="ctx">Albato (iPaaS), 2025–2026 · consulting contract</span></div>
+    <div class="v">
+      <p>A FastAPI backend that takes a list of company domains and turns each into a qualified, personalised outreach target for the SDR team. Excel in, enriched Excel out, HubSpot deals in sync.</p>
+      <div class="flow" aria-label="Enrichment chain">
+        <span>site check</span><i>→</i><span>geo / language</span><i>→</i><span>firmographics</span><i>→</i><span class="llm">SaaS &amp; vertical (LLM)</span><i>→</i><span>tech-stack match, 5,000+ apps</span><i>→</i><span>decision-maker &amp; email</span><i>→</i><span>outreach rules</span><i>→</i><span class="llm">pitch + first-integration proposal</span>
+      </div>
+      <p class="flow-cap">A JSON-driven orchestrator runs a different chain per buyer persona (sales, CTO, CPO, founder, partnerships, customer success) with conditional branching, batching and resume. The same steps are exposed as tools to an LLM agent with a chat UI; dedicated agents handle pipeline scoring and follow-ups.</p>
+      <p class="mine"><b>What I did:</b> everything — architecture, ~20k lines of async Python, data model, 26 endpoints, auth and monitoring, deployment behind the company LLM gateway.</p>
+      <ul class="stack"><li>Python / FastAPI</li><li>PostgreSQL</li><li>Gemini, DeepSeek, Claude via OpenRouter</li><li>FullEnrich, Amplemarket</li><li>HubSpot API</li><li>Docker</li></ul>
+    </div>
+  </div>
+
+  <div class="sys">
+    <div class="k"><b>Speech analytics for a sales floor</b><span class="ctx">Large real-estate developer, 2025–</span></div>
+    <div class="v">
+      <p>Nightly pipeline over ~2,000 sales calls a day: diarization, transcription and LLM scoring of call quality, objections and lead intent, with results back to sales managers in the morning. Runs on one A100 with two quantised models served side by side.</p>
+      <p class="mine"><b>What I did:</b> designed the pipeline, optimised it for cost, tuned and debugged the serving stack, ran the pilot with the client's sales and analytics teams. Deployment is on Russian infrastructure compliant with local personal-data law.</p>
+      <ul class="stack"><li>pyannote</li><li>Voxtral</li><li>Qwen</li><li>vLLM</li><li>A100</li><li>Selectel / OpenStack</li></ul>
+    </div>
+  </div>
+
+  <div class="sys">
+    <div class="k"><b>AI PM — reporting agents</b><span class="ctx">Media agency, several large clients, 2025–</span></div>
+    <div class="v">
+      <p>Telegram agents that pull campaign and CRM data, read the team's working chats, assemble daily and weekly reports for stakeholders at different levels, check their own output before sending, and deliver it as rich messages to account teams and clients.</p>
+      <p class="mine"><b>What I did:</b> architecture and most of the backend; the data layer that pulls two attribution systems into one warehouse; the self-check step that cut wrong numbers reaching clients.</p>
+      <ul class="stack"><li>Python</li><li>Telegram Bot API</li><li>Claude</li><li>PostgreSQL</li><li>Smartis / Kiberbrain</li></ul>
+    </div>
+  </div>
+
+  <div class="sys">
+    <div class="k"><b>SecondBrain</b><span class="ctx">Own product, 2026– · private repo, demo on request</span></div>
+    <div class="v">
+      <p>A memory bank that ingests Telegram and Yandex Messenger chats, forwarded email, Granola meeting transcripts, Linear issues and GitHub activity, and agents that reason over it. With the full context of every task, they do more than answer “what did X promise and when”: they surface unanswered commitments and silent projects, compare promised with done, draft the follow-ups and close routine tasks themselves. The brief above is its daily output.</p>
+      <p class="mine"><b>What I did:</b> all of it, on my own time. Now being adopted by the agency group under an inner-source agreement; a Claude-based GTM agent team is being assembled to take it to SMBs.</p>
+      <ul class="stack"><li>Hindsight</li><li>Claude, MCP servers</li><li>Python</li><li>Telegram</li><li>Linear API, GitHub API</li></ul>
+    </div>
+  </div>
+
+  <div class="sys">
+    <div class="k"><b>Creative Validator</b><span class="ctx">Media agency, 2026–</span></div>
+    <div class="v">
+      <p>Compares ad creatives in Figma or a constructor with the ad platform's specs and the actual placement status across hundreds of campaigns, and reports mismatches before the client does. Adopted by teams at two of the largest Russian advertisers via a Google Sheets adapter.</p>
+      <p class="mine"><b>What I did:</b> architecture and backend; Figma, Yandex.Direct and Drive integrations.</p>
+      <ul class="stack"><li>Python</li><li>Figma API</li><li>Yandex.Direct API</li><li>Google Sheets / Drive</li></ul>
+    </div>
+  </div>
+
+  <div class="sys">
+    <div class="k"><b>Agentic development pipeline</b><span class="ctx">Media agency, internal, 2026–</span></div>
+    <div class="v">
+      <p>An AI-dev orchestrator with DeepWiki and Hindsight integration that takes simple manager-level tickets from description to code deployed in production, plus the AI DevOps layer that watches the rest of the fleet. Around it: a daily industry news digest (10 industries, one Telegram channel each), an OOH photo-report generator (Excel + photos → PPTX), a plan-fact validator of daily reports, process mining over ad-ops chat exports.</p>
+      <p class="mine"><b>What I did:</b> designed and built the orchestrator; own the internal LLM gateway, observability and evals it runs on.</p>
+      <ul class="stack"><li>Claude Code</li><li>YouTrack, Linear</li><li>LiteLLM</li><li>Langfuse</li><li>Hetzner</li></ul>
+    </div>
+  </div>
+
+  <div class="sys">
+    <div class="k"><b>Albato Copilot</b><span class="ctx">Albato (iPaaS), 2025 · consulting contract</span></div>
+    <div class="v">
+      <p>An agent that designs integration workflows for a no-code iPaaS from a user's description.</p>
+      <p class="mine"><b>What I did:</b> advised the product team and built the first backend version hands-on; cut cost and latency by routing summaries to a cheaper model at the same quality, enabling prompt caching and adding a fast path for trivial cases.</p>
+      <ul class="stack"><li>LangChain</li><li>OpenRouter</li><li>Python</li></ul>
+    </div>
+  </div>
+
+  <div class="sys">
+    <div class="k"><b>TaskWeave</b><span class="ctx">Side project · <a href="https://taskweave.app">taskweave.app</a></span></div>
+    <div class="v">
+      <p>An AI calendar and task assistant; alpha-tested with a UX refactor cycle.</p>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="two">
+    <div>
+      <h2>How I work</h2>
+      <p><b>Small, pragmatic architectures.</b> I pick MCP, APIs and open-source frameworks over custom code wherever they fit, and I know from running them where a custom piece is worth it.</p>
+      <p><b>Prototype fast, throw away what does not work.</b> Everything above started as something embarrassing that one real user tried the next day.</p>
+      <p><b>Decide before requirements settle.</b> I am comfortable making the architectural call early and changing it when the evidence says so.</p>
+      <p><b>GTM is my domain, not a client vertical.</b> Fifteen years building products whose success was measured in a sales funnel, so I know which signals sales teams trust and why most “AI for sales” tools are ignored after two weeks.</p>
+    </div>
+    <div>
+      <h2>Earlier</h2>
+      <ul class="career">
+        <li><span class="yrs">2022 –</span><span class="what"><b>Oom Agency by OKKAM</b> — Director of AI Solutions &amp; Transformation (since 2024); before that Head of Research &amp; Insights</span></li>
+        <li><span class="yrs">2025 – 2026</span><span class="what"><b>Albato</b> — AI consultant on a part-time contract</span></li>
+        <li><span class="yrs">2021</span><span class="what"><b>Yandex Images</b> — Product Owner</span></li>
+        <li><span class="yrs">2019 – 2021</span><span class="what"><b>Raiffeisen Bank</b> — SVP, Head of Digital Lending (Corporate)</span></li>
+        <li><span class="yrs">2016 – 2019</span><span class="what"><b>Yandex.Money</b> — Head of Division, CPA platform and loyalty products</span></li>
+        <li><span class="yrs">2011 – 2016</span><span class="what"><b>Yandex</b> — Product Development Manager, Leading Analyst (adtech)</span></li>
+        <li><span class="yrs">1993</span><span class="what"><b>iXBT.com</b> — co-founder, while still at school; one of the first large Russian IT sites</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="row">
+    <b>Andrey Yaschenko</b>
+    <a href="mailto:andy@yaschenko.email">andy@yaschenko.email</a>
+    <a href="https://t.me/Panaslonic">Telegram @Panaslonic</a>
+    <a href="https://www.linkedin.com/in/andrey-yaschenko-398382121">LinkedIn</a>
+    <span>Belgrade, Serbia</span>
+  </div>
+  <small>Client names are withheld where the work is under NDA; I am happy to walk through any system live.</small>
+</footer>
+</div>
+
+<script>
+(function(){
+  var b=document.getElementById('brief'),t=document.getElementById('toggle');
+  t.addEventListener('click',function(){
+    var open=b.classList.toggle('open');
+    t.setAttribute('aria-expanded',open?'true':'false');
+    t.textContent=open?'Collapse brief':'Show full brief';
+    if(!open){b.scrollTop=0;b.scrollIntoView({block:'nearest'});}
+  });
+})();
+</script>
+</body>
+</html>
